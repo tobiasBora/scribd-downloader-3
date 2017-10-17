@@ -1,0 +1,43 @@
+* Scribd Downloader 3
+
+This script is a very short python script whose aim is to download scribd document into a PDF file.
+
+** Installation
+
+To use this script you first need to make sure that =firefox=, =python3= and the python libraries =selenium= and =fpdf= are installed (sorry, I may forget one library, if you have a problem, contact me to tobias.bora@gmail.com):
+
+On debian-like systems, you can proceed using something like this:
+: sudo apt install firefox python3 python3-pip
+: sudo pip3 install selenium
+: sudo pip3 install fpdf
+
+Then, download this script :
+: git clone https://github.com/tobiasBora/scribd-downloader-3.git
+
+Make sure it's executable
+: chmod +x scribd_downloader_3.py
+
+as well as the last driver geckodriver available at https://github.com/mozilla/geckodriver/releases:
+: wget https://github.com/mozilla/geckodriver/releases/download/v0.19.0/geckodriver-v0.19.0-linux64.tar.gz
+: tar zxvf geckodriver-v0.19.0-linux64.tar.gz 
+
+Great, you can now use the script !
+
+** Usage
+
+To use the script it's pretty easy. Here is the general usage:
+
+: ./scribd_downloader_3.py -p <PATH GECKODRIVER> <URL> <PDF OUTPUT>
+
+(NB : if =geckodriver= is in your global path, you can remove the flag =p=)
+
+For example if =geckodriver= is in the same folder as the script, you can run something like:
+: ./scribd_downloader_3.py -p . "https://www.scribd.com/document/31698781/Constitution-of-the-Mexican-Mafia-in-Texas" out.pdf
+
+If you are on a headless server, or if the firefox window that is open bother you, you may want to install =xvfb= and then run the same command prefixed with =xvfb-run=:
+: xvfb-run ./scribd_downloader_3.py -p <PATH GECKODRIVER> <URL> <PDF OUTPUT>
+the script will now run blindly !
+
+** Troubleshootings
+
+I spent only 2 hours to make this script, so it's not supposed to be perfect at all, and I tested it only on a few files. Moreover, because scribd is changing often, it may not be working. If you have any trouble, you can email me to tobias.bora@gmail.com, or correct the code (it should not be too complicated, the code is pretty straight forward and simple) and do a pull request.
