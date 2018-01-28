@@ -168,8 +168,12 @@ def main(scribd_url, final_pdf_output, verbose=1):
     pdf = FPDF()
     for p in range(nb_pages):
         pdf.add_page()
-        page_width = 1000
-        page_height = 1294
+        try:
+            page_width = driver.execute_script("""return document.getElementById("outer_page_""" + str(p+1) + """").offsetWidth""")
+            page_height = driver.execute_script("""return document.getElementById("outer_page_""" + str(p+1) + """").offsetHeight""")
+        except:
+            page_width = 1000
+            page_height = 1294            
         crop_rectangle = (0, p*page_height, page_width, (p+1)*page_height)
         current_page_img = big_screenshot.crop(crop_rectangle)
         out_curr_filename = temp_folder + "/final_page_{0:04d}.png".format(p)
