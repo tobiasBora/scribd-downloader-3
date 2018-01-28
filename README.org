@@ -10,6 +10,7 @@ On debian-like systems, you can proceed using something like this:
 : sudo apt install firefox python3 python3-pip
 : sudo pip3 install selenium
 : sudo pip3 install fpdf
+: sudo pip3 install Pillow
 
 Then, download this script :
 : git clone https://github.com/tobiasBora/scribd-downloader-3.git
