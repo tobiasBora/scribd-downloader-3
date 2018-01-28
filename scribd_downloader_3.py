@@ -5,6 +5,15 @@
 # If you do not want to change the global path, you can just run
 # PATH=$PATH:$(pwd)/geckodriver-v0.19.0-linux64 bash -c './scribd_downloader_3.py'
 
+# Examples:
+# 77 pages, different size:
+# https://www.scribd.com/doc/236735923/3-Gelfand-Glagoleva-Kirilov-The-Method-of-coordinates-pdf
+# 2 pages, music, one hidden
+# https://www.scribd.com/doc/63942746/chopin-nocturne-n-20-partition
+# others:
+# https://www.scribd.com/document/359303091/A-Repository-of-Unix-History-and-Evolution
+# https://www.scribd.com/document/31698781/Constitution-of-the-Mexican-Mafia-in-Texas
+
 # TODO : auto download the geckodriver
 
 import argparse
