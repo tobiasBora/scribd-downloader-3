@@ -61,7 +61,10 @@ def take_one_big_screenshot(driver, filename_out, verbose=1):
             command = "$(\".document_scroller\")[0].scrollTop = %s;" % offset
             driver.execute_script(command)
             offset_arr.append(offset)
-
+            
+        # Better way?
+        time.sleep(1)
+        
         # Creates image
         img = Image.open(BytesIO(driver.get_screenshot_as_png()))
         last_img_size = img.size[1]
@@ -120,7 +123,10 @@ def main(scribd_url, final_pdf_output, verbose=1):
                        "header_upper",
                        "toolbar_drop",
                        "between_page_ads",
-                       "autogen_class_views_pdfs_upvote"]
+                       "autogen_class_views_pdfs_upvote",
+                       "page_blur_promo",
+                       "autogen_class_views_pdfs_page_blur_promo",
+                       "page_missing_explanation"]
     for class_name in class_to_remove:
         remove_class(driver, class_name)
     add_css_property(driver, "document_column", "position", "static")
@@ -135,6 +141,9 @@ def main(scribd_url, final_pdf_output, verbose=1):
     add_css_property(driver, "outer_page", "marginTop", "0px")
     add_css_property(driver, "outer_page", "marginBottom", "0px")
     add_css_property(driver, "document_container", "margin", "0px")
+    # Allow blocked pages
+    add_css_property(driver, "text_layer", "textShadow", "black 0 0 0px")
+    add_css_property(driver, "absimg", "opacity", "1")
     if verbose > 0:
         print("Useless parts removed !")
 
