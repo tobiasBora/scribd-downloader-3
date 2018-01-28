@@ -163,6 +163,7 @@ def main(scribd_url, final_pdf_output, verbose=1, wait=1.0):
     if verbose > 0:
         print("I will take the big screenshot...")
         big_out_picture_path = temp_folder + "/test_big_code.png"
+    # TODO: would be nice to avoid the need of doing one big screenshot
     big_screenshot = take_one_big_screenshot(driver, big_out_picture_path, verbose=verbose, wait=wait)
 
     ####### Get the number of page ######
@@ -172,6 +173,7 @@ def main(scribd_url, final_pdf_output, verbose=1, wait=1.0):
 
     ####### Produce the output pdf ######
     pdf = FPDF()
+    current_top=0
     for p in range(nb_pages):
         pdf.add_page()
         try:
@@ -179,8 +181,10 @@ def main(scribd_url, final_pdf_output, verbose=1, wait=1.0):
             page_height = driver.execute_script("""return document.getElementById("outer_page_""" + str(p+1) + """").offsetHeight""")
         except:
             page_width = 1000
-            page_height = 1294            
-        crop_rectangle = (0, p*page_height, page_width, (p+1)*page_height)
+            page_height = 1294
+        if verbose > 0:
+            print("Page %d: %d x %d" % (p+1, page_width, page_height))
+        crop_rectangle = (0, current_top, page_width, current_top + page_height)
         current_page_img = big_screenshot.crop(crop_rectangle)
         out_curr_filename = temp_folder + "/final_page_{0:04d}.png".format(p)
         current_page_img.save(out_curr_filename)
@@ -190,6 +194,7 @@ def main(scribd_url, final_pdf_output, verbose=1, wait=1.0):
         else:
             pdf.image(out_curr_filename,
                       x = 0, y = 0, w = 210)
+        current_top += page_height
     pdf.output(final_pdf_output, 'F')
         
     return(driver, big_screenshot)

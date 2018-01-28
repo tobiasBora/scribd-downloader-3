@@ -24,6 +24,10 @@ as well as the last driver geckodriver available at https://github.com/mozilla/g
 
 Great, you can now use the script !
 
+** Features
+- convert into a pdf file an online scribd document
+- deal with blured pages that would require an account
+- deal with document with different page size
 ** Usage
 
 To use the script it's pretty easy. Here is the general usage:
@@ -39,7 +43,8 @@ If you are on a headless server, or if the firefox window that is open bother yo
 : xvfb-run ./scribd_downloader_3.py -p <PATH GECKODRIVER> <URL> <PDF OUTPUT>
 the script will now run blindly !
 
-** It's a bit slow/quick, can I increase/decrease the speed?
+** FAQ
+*** It's a bit slow/quick, can I increase/decrease the speed?
 
 By default, this script waits 1s between each "screenshot" to be sure the page is loaded. If you have a slow connection, this may be too short, creating some blank pages, and if you have a good connection this may be to big, and you may want to decrease this time to download the page quicker.
 
@@ -48,6 +53,7 @@ For example if you want to wait 0.2 seconds between each screenshot, just use th
 Example:
 : ./scribd_downloader_3.py -p . https://www.scribd.com/document/359303091/A-Repository-of-Unix-History-and-Evolution unix_history.pdf -w 0.2
 
+
 ** Troubleshootings
 
-I spent only a few hours to make this script, so it's not supposed to be perfect at all, and I tested it only on a few files. Moreover, because scribd is changing often, it may not be working. If you have any trouble, you can email me to tobias.bora@gmail.com, or correct the code (it should not be too complicated, the code is pretty straight forward and simple) and do a pull request.
+I spent only a few hours to make this script, so it's not supposed to be perfect, but for what I tried it works pretty nicely. However, because scribd is changing often, it may not be working, so if you have any trouble, please [[https://github.com/tobiasBora/scribd-downloader-3/issues][fill an issue here]] or edit the code (it should not be too complicated, the code is pretty straight forward and simple) and do a pull request.
