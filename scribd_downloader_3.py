@@ -54,7 +54,7 @@ def clean_page(driver):
     add_css_property(driver, "absimg", "opacity", "1")
 
     
-def take_one_big_screenshot(driver, filename_out, verbose=1):
+def take_one_big_screenshot(driver, filename_out, verbose=1, wait=1.0):
     ####### Download the pictures ######
     verbose = 1
     # Get total height of page
@@ -93,7 +93,7 @@ def take_one_big_screenshot(driver, filename_out, verbose=1):
 
         clean_page(driver)
         # Better way?
-        time.sleep(1)
+        time.sleep(wait)
         
         # Creates image
         img = Image.open(BytesIO(driver.get_screenshot_as_png()))
@@ -117,7 +117,7 @@ def take_one_big_screenshot(driver, filename_out, verbose=1):
     screenshot.save(filename_out)
     return screenshot
     
-def main(scribd_url, final_pdf_output, verbose=1):
+def main(scribd_url, final_pdf_output, verbose=1, wait=1.0):
     if verbose > 0:
         print("I will start the scraping...")
     # Create the temporary folder
@@ -163,7 +163,7 @@ def main(scribd_url, final_pdf_output, verbose=1):
     if verbose > 0:
         print("I will take the big screenshot...")
         big_out_picture_path = temp_folder + "/test_big_code.png"
-    big_screenshot = take_one_big_screenshot(driver, big_out_picture_path, verbose=verbose)
+    big_screenshot = take_one_big_screenshot(driver, big_out_picture_path, verbose=verbose, wait=wait)
 
     ####### Get the number of page ######
     nb_pages = driver.execute_script("""return Scribd.current_doc["page_count"]""")
@@ -206,18 +206,23 @@ if __name__ == '__main__':
     parser.add_argument("-v", "--verbose",
                         metavar='VERB',
                         type=int,
-                        help='Verbosity',
+                        help='Verbosity, in 0-1',
                         default=1 )
     parser.add_argument("-p", "--path-geckodriver",
                         metavar='PATH',
                         help="The path of the folder containing the geckodriver folder if it's not already in the path",
                         default="."
                         )
+    parser.add_argument("-w", "--wait-time",
+                        metavar='WAIT',
+                        type=float,
+                        help='The time to wait between each screenshot in seconds (float accepted)',
+                        default=1.0 )
     args = parser.parse_args()
     if args.path_geckodriver:
         os.environ["PATH"] += os.pathsep + os.path.abspath(args.path_geckodriver)
     print("Scraping url: " + args.url)
     print("Output: " + args.output_pdf)
-    (driver,_) = main(args.url, args.output_pdf, verbose=args.verbose)
+    (driver,_) = main(args.url, args.output_pdf, verbose=args.verbose, wait=args.wait_time)
     print("The pdf has been succesfully created in " + args.output_pdf + " !")
     driver.close()
