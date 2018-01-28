@@ -27,6 +27,13 @@ from fpdf import FPDF
 import os
 import shutil
 
+# Avoid useless warning about image size
+try:
+    Image.MAX_IMAGE_PIXELS = None
+    warnings.simplefilter('ignore', Image.DecompressionBombWarning)
+except: # Not sure if PIL (not Pillow) has these functions
+    pass
+
 def remove_class(driver, class_name):
     driver.execute_script("Array.from(document.getElementsByClassName('" + class_name + "')).forEach(function(x) {x.remove()});")
 
@@ -112,6 +119,7 @@ def take_one_big_screenshot(driver, filename_out, verbose=1, wait=1.0):
         slices.append(img)
         if verbose > 1:
             driver.get_screenshot_as_file(temp_folder + '/screen_%s.jpg' % (offset))
+    driver.execute_script("""alert("Please don't close this browser, it will be closed by itself at the end of the conversion. And don't close this box either or the brower may not close by itself.")""")
 
     # Create image with 
     screenshot = Image.new('RGB', (slices[0].size[0], scrollheight))
@@ -174,7 +182,7 @@ def main(scribd_url, final_pdf_output, verbose=1, wait=1.0):
         big_out_picture_path = temp_folder + "/test_big_code.png"
     # TODO: would be nice to avoid the need of doing one big screenshot
     big_screenshot = take_one_big_screenshot(driver, big_out_picture_path, verbose=verbose, wait=wait)
-
+    
     ####### Get the number of page ######
     nb_pages = driver.execute_script("""return Scribd.current_doc["page_count"]""")
     if verbose > 0:
@@ -239,4 +247,9 @@ if __name__ == '__main__':
     print("Output: " + args.output_pdf)
     (driver,_) = main(args.url, args.output_pdf, verbose=args.verbose, wait=args.wait_time)
     print("The pdf has been succesfully created in " + args.output_pdf + " !")
+    try:
+        alert = driver.switch_to.alert
+        alert.accept()
+    except:
+        pass
     driver.close()

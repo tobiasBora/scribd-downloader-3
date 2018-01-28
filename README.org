@@ -18,7 +18,7 @@ Then, download this script :
 Make sure it's executable
 : chmod +x scribd_downloader_3.py
 
-as well as the last driver geckodriver available at https://github.com/mozilla/geckodriver/releases:
+as well as the last driver geckodriver available at https://github.com/mozilla/geckodriver/releases (make sure it's the version corresponding to your hardware):
 : wget https://github.com/mozilla/geckodriver/releases/download/v0.19.0/geckodriver-v0.19.0-linux64.tar.gz
 : tar zxvf geckodriver-v0.19.0-linux64.tar.gz 
 
@@ -48,7 +48,7 @@ the script will now run blindly !
 
 By default, this script waits 1s between each "screenshot" to be sure the page is loaded. If you have a slow connection, this may be too short, creating some blank pages, and if you have a good connection this may be to big, and you may want to decrease this time to download the page quicker.
 
-For example if you want to wait 0.2 seconds between each screenshot, just use the option "-w 0.2":
+For example if you want to wait 0.2 seconds (I even tried 0s on a 77 pages document and it worked without any trouble) between each screenshot, just use the option "-w 0.2":
 
 Example:
 : ./scribd_downloader_3.py -p . https://www.scribd.com/document/359303091/A-Repository-of-Unix-History-and-Evolution unix_history.pdf -w 0.2
