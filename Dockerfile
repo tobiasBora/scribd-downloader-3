@@ -1,8 +1,13 @@
 FROM ubuntu:16.04
-# To build this image, run:
+# To use the online image, use:
+# $ sudo docker run -it --shm-size 2g -v $(pwd):/host -w /host tobiasbora/scribd-downloader:18.01 bash
+# And then inside the container (don't forget xvfb):
+# $ xvfb-run ./scribd_downloader_3.py "https://www.scribd.com/doc/63942746/chopin-nocturne-n-20-partition" out.pdf
+
+# If you want to build this image, run:
 # $ sudo docker build -t scribd-d .
 # And to run it:
-# $ docker run -it --shm-size 2g scribd-d bash
+# $ sudo docker run -it --shm-size 2g -v $(pwd):/host -w /host scribd-d bash
 # And then inside the container (don't forget xvfb):
 # $ xvfb-run ./scribd_downloader_3.py "https://www.scribd.com/doc/63942746/chopin-nocturne-n-20-partition" out.pdf
 
