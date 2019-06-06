@@ -1,5 +1,7 @@
 * Scribd Downloader 3
 
+/!\ Important: **The script is not working anymore.** I don't have time to maintain this script, and scribd's interface changes quite often and I can't update the script every month. I saw that now some alternative exists, so I don't think I'll continue to maintain it, but if someone wants to send some PR, feel free! The current code is not complicated to modify ;)
+
 This script is a very short python script whose aim is to download scribd document into a PDF file.
 
 ** Installation
